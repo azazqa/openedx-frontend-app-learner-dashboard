@@ -10,7 +10,6 @@ jest.mock('hooks', () => ({
 jest.mock('plugin-slots/CourseCardActionSlot', () => jest.fn(() => <div>CourseCardActionSlot</div>));
 jest.mock('./SelectSessionButton', () => jest.fn(() => <div>SelectSessionButton</div>));
 jest.mock('./ViewCourseButton', () => jest.fn(() => <div>ViewCourseButton</div>));
-jest.mock('./BeginCourseButton', () => jest.fn(() => <div>BeginCourseButton</div>));
 jest.mock('./ResumeButton', () => jest.fn(() => <div>ResumeButton</div>));
 
 const cardId = 'test-card-id';
@@ -62,13 +61,13 @@ describe('CourseCardActions', () => {
         expect(ViewCourseButton).toBeInTheDocument();
       });
       describe('unstarted courses', () => {
-        it('renders CourseCardActionSlot and BeginCourseButton', () => {
+        it('renders CourseCardActionSlot and ViewCourseButton', () => {
           mockHooks({ isEntitlement: null });
           renderComponent();
           const CourseCardActionSlot = screen.getByText('CourseCardActionSlot');
           expect(CourseCardActionSlot).toBeInTheDocument();
-          const BeginCourseButton = screen.getByText('BeginCourseButton');
-          expect(BeginCourseButton).toBeInTheDocument();
+          const ViewCourseButton = screen.getByText('ViewCourseButton');
+          expect(ViewCourseButton).toBeInTheDocument();
         });
       });
       describe('active courses (started, and not archived)', () => {

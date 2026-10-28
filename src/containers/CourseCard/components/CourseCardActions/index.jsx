@@ -7,7 +7,6 @@ import { useCourseData, useEntitlementInfo } from 'hooks';
 
 import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
 import SelectSessionButton from './SelectSessionButton';
-import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';
 import ViewCourseButton from './ViewCourseButton';
 
@@ -29,7 +28,7 @@ export const CourseCardActions = ({ cardId }) => {
       )}
       {!(isArchived || isEntitlement) && (hasStarted
         ? <ResumeButton cardId={cardId} />
-        : <BeginCourseButton cardId={cardId} />
+        : <ViewCourseButton cardId={cardId} />
       )}
     </ActionRow>
   );
