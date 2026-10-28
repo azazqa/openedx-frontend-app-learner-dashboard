@@ -1,6 +1,7 @@
 export const learnerDashboardQueryKeys = {
   all: ['learner-dashboard'] as const,
   initialize: (masqueradedUser?: string | null) => [...learnerDashboardQueryKeys.all, 'initialize', masqueradedUser] as const,
+  progress: () => [...learnerDashboardQueryKeys.all, 'progress'] as const,
   unenrollFromCourse: () => [...learnerDashboardQueryKeys.all, 'unenrollFromCourse'] as const,
   updateEntitlementEnrollment: () => [...learnerDashboardQueryKeys.all, 'updateEntitlementEnrollment'] as const,
   deleteEntitlementEnrollment: () => [...learnerDashboardQueryKeys.all, 'deleteEntitlementEnrollment'] as const,

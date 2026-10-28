@@ -9,6 +9,7 @@ import CourseCardImage from './components/CourseCardImage';
 import CourseCardMenu from './components/CourseCardMenu';
 import CourseCardActions from './components/CourseCardActions';
 import CourseCardDetails from './components/CourseCardDetails';
+import CourseProgress from './components/CourseProgress';
 import CourseCardTitle from './components/CourseCardTitle';
 
 import './CourseCard.scss';
@@ -31,6 +32,7 @@ export const CourseCard = ({
               />
               <Card.Section className="pt-0">
                 <CourseCardDetails cardId={cardId} />
+                <CourseProgress cardId={cardId} />
               </Card.Section>
               <Card.Footer orientation={orientation}>
                 <CourseCardActions cardId={cardId} />
