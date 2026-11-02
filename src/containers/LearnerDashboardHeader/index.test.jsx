@@ -33,7 +33,7 @@ describe('LearnerDashboardHeader', () => {
     render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
     expect(screen.getByText('ConfirmEmailBanner')).toBeInTheDocument();
     expect(screen.getByText('MasqueradeBar')).toBeInTheDocument();
-    const discover = screen.getByRole('link', { name: '새로운 것을 발견하세요' });
+    const discover = screen.getByRole('link', { name: '과정' });
     expect(discover).toHaveAttribute('href', urls.baseAppUrl(courseSearchUrl));
     discover.click();
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl(courseSearchUrl));
@@ -54,6 +54,6 @@ describe('LearnerDashboardHeader', () => {
   it('should not display Discover New tab if it is disabled by configuration', () => {
     mergeConfig({ NON_BROWSABLE_COURSES: true });
     render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
-    expect(screen.queryByRole('link', { name: '새로운 것을 발견하세요' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '과정' })).not.toBeInTheDocument();
   });
 });

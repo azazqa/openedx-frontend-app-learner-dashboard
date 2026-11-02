@@ -53,7 +53,7 @@ const messages = defineMessages({
   },
   discoverNew: {
     id: 'learnerVariantDashboard.discoverNew',
-    defaultMessage: '새로운 것을 발견하세요',
+    defaultMessage: '과정',
     description: 'Header link for switching to discover page.',
   },
   skipNavLink: {
