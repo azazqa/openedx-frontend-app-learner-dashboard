@@ -52,9 +52,9 @@ const messages = defineMessages({
     description: 'Header link for switching to program page.',
   },
   discoverNew: {
-    id: 'learnerVariantDashboard.discoverNew',
+    id: 'klms.header.courses',
     defaultMessage: '과정',
-    description: 'Header link for switching to discover page.',
+    description: '상단 메뉴의 과정 링크. 번역 저장소의 Discover 문구를 쓰지 않습니다.',
   },
   skipNavLink: {
     id: 'header.navigation.skipNavLink',
