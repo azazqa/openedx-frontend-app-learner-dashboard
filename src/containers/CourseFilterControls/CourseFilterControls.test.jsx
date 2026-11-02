@@ -47,7 +47,7 @@ describe('CourseFilterControls', () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth - 1 });
       render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
-      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      const filtersButton = screen.getByRole('button', { name: '필터' });
       await user.click(filtersButton);
       await waitFor(() => {
         const sheet = screen.getByRole('presentation', { hidden: true });
@@ -61,7 +61,7 @@ describe('CourseFilterControls', () => {
       const user = userEvent.setup();
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
       render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
-      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      const filtersButton = screen.getByRole('button', { name: '필터' });
       await user.click(filtersButton);
       await waitFor(() => {
         const filterForm = screen.getByText(messages.courseStatus.defaultMessage);
@@ -94,7 +94,7 @@ describe('CourseFilterControls', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
       render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
-      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      const filtersButton = screen.getByRole('button', { name: '필터' });
       await user.click(filtersButton);
       await waitFor(async () => {
         const sortRadio = screen.getByRole('radio', { name: formatMessage(messages.sortTitle) });
@@ -116,7 +116,7 @@ describe('CourseFilterControls', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
       render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
-      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      const filtersButton = screen.getByRole('button', { name: '필터' });
       await user.click(filtersButton);
       await waitFor(async () => {
         const filterCheckbox = screen.getByText('In-Progress');
@@ -138,7 +138,7 @@ describe('CourseFilterControls', () => {
       useInitializeLearnerHome.mockReturnValue({ data: { courses: [1, 2, 3] } });
       useWindowSize.mockReturnValue({ width: breakpoints.small.minWidth });
       render(<IntlProvider locale="en"><CourseFilterControls /></IntlProvider>);
-      const filtersButton = screen.getByRole('button', { name: 'Refine' });
+      const filtersButton = screen.getByRole('button', { name: '필터' });
       await user.click(filtersButton);
       await waitFor(async () => {
         const filterCheckbox = screen.getByText('In-Progress');

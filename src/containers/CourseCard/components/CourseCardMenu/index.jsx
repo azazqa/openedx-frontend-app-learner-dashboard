@@ -5,21 +5,15 @@ import { Dropdown, Icon, IconButton } from '@openedx/paragon';
 import { MoreVert } from '@openedx/paragon/icons';
 
 import EmailSettingsModal from 'containers/EmailSettingsModal';
-import UnenrollConfirmModal from 'containers/UnenrollConfirmModal';
-import { useCourseData, useIsMasquerading } from 'hooks';
+import { useCourseData } from 'hooks';
 import SocialShareMenu from './SocialShareMenu';
 import {
   useEmailSettings,
-  useUnenrollData,
   useHandleToggleDropdown,
   useOptionVisibility,
 } from './hooks';
 
 import messages from './messages';
-
-export const testIds = {
-  unenrollModalToggle: 'unenrollModalToggle',
-};
 
 export const CourseCardMenu = ({ cardId }) => {
   const { formatMessage } = useIntl();
@@ -28,10 +22,8 @@ export const CourseCardMenu = ({ cardId }) => {
   const isEmailEnabled = courseData?.enrollment?.isEmailEnabled ?? false;
 
   const emailSettings = useEmailSettings();
-  const unenrollModal = useUnenrollData();
   const handleToggleDropdown = useHandleToggleDropdown(cardId);
-  const { shouldShowUnenrollItem, shouldShowDropdown } = useOptionVisibility(cardId);
-  const isMasquerading = useIsMasquerading();
+  const { shouldShowDropdown } = useOptionVisibility(cardId);
 
   if (!shouldShowDropdown) {
     return null;
@@ -49,23 +41,9 @@ export const CourseCardMenu = ({ cardId }) => {
           alt={formatMessage(messages.dropdownAlt)}
         />
         <Dropdown.Menu>
-          {shouldShowUnenrollItem && (
-            <Dropdown.Item
-              disabled={isMasquerading}
-              onClick={unenrollModal.show}
-              data-testid={testIds.unenrollModalToggle}
-            >
-              {formatMessage(messages.unenroll)}
-            </Dropdown.Item>
-          )}
           <SocialShareMenu cardId={cardId} emailSettings={emailSettings} />
         </Dropdown.Menu>
       </Dropdown>
-      <UnenrollConfirmModal
-        show={unenrollModal.isVisible}
-        closeModal={unenrollModal.hide}
-        cardId={cardId}
-      />
       {isEmailEnabled && (
         <EmailSettingsModal
           show={emailSettings.isVisible}

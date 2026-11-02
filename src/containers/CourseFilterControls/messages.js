@@ -52,9 +52,9 @@ const messages = defineMessages({
     defaultMessage: 'Title (A-Z)',
   },
   refine: {
-    id: 'learner-dash.courseListFilters.refine',
-    description: 'Filter button container text',
-    defaultMessage: 'Refine',
+    id: 'klms.learnerDashboard.courseListFilters.refine',
+    description: '강좌 목록 필터 버튼. 번역 저장소의 Refine 문구를 쓰지 않습니다.',
+    defaultMessage: '필터',
   },
 });
 

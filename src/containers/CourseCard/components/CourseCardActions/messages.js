@@ -7,9 +7,9 @@ const messages = defineMessages({
     defaultMessage: 'Begin Course',
   },
   resume: {
-    id: 'learner-dash.courseCard.actions.resume',
-    description: 'Course card resume button text',
-    defaultMessage: 'Resume',
+    id: 'klms.learnerDashboard.courseCard.actions.resume',
+    description: '강좌 카드 학습 버튼. 번역 저장소의 Resume 문구를 쓰지 않습니다.',
+    defaultMessage: '학습하기',
   },
   viewCourse: {
     id: 'learner-dash.courseCard.actions.viewCourse',

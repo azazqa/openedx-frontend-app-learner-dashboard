@@ -32,13 +32,7 @@ const getLearnerHeaderMenu = (
     }]
       : []),
   ],
-  secondaryMenu: [
-    ...(getConfig().SUPPORT_URL ? [{
-      type: 'item',
-      href: `${getConfig().SUPPORT_URL}`,
-      content: formatMessage(messages.help),
-    }] : []),
-  ],
+  secondaryMenu: [],
   userMenu: [
     {
       heading: '',

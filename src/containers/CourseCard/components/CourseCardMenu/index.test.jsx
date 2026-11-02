@@ -4,21 +4,18 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { useCourseData, useIsMasquerading } from 'hooks';
+import { useCourseData } from 'hooks';
 import * as hooks from './hooks';
 import CourseCardMenu from '.';
 import messages from './messages';
 
 jest.mock('hooks', () => ({
   useCourseData: jest.fn(),
-  useIsMasquerading: jest.fn(),
 }));
 jest.mock('./SocialShareMenu', () => jest.fn(() => <div>SocialShareMenu</div>));
 jest.mock('containers/EmailSettingsModal', () => jest.fn(() => <div>EmailSettingsModal</div>));
-jest.mock('containers/UnenrollConfirmModal', () => jest.fn(() => <div>UnenrollConfirmModal</div>));
 jest.mock('./hooks', () => ({
   useEmailSettings: jest.fn(),
-  useUnenrollData: jest.fn(),
   useHandleToggleDropdown: jest.fn(),
   useOptionVisibility: jest.fn(),
 }));
@@ -31,12 +28,6 @@ const emailSettings = {
   isVisible: false,
   show: jest.fn().mockName('emailSettingShow'),
   hide: jest.fn().mockName('emailSettingHide'),
-};
-
-const unenrollData = {
-  isVisible: false,
-  show: jest.fn().mockName('unenrollShow'),
-  hide: jest.fn().mockName('unenrollHide'),
 };
 
 const mockHook = (fn, returnValue, options = {}) => {
@@ -54,20 +45,14 @@ const mockHooks = (returnVals = {}) => {
     hooks.useEmailSettings,
     returnVals.emailSettings ? returnVals.emailSettings : emailSettings,
   );
-  mockHook(
-    hooks.useUnenrollData,
-    returnVals.unenrollData ? returnVals.unenrollData : unenrollData,
-  );
   mockHook(hooks.useHandleToggleDropdown, handleToggleDropdown, { isCardHook: true });
   mockHook(
     hooks.useOptionVisibility,
     {
-      shouldShowUnenrollItem: !!returnVals.shouldShowUnenrollItem,
       shouldShowDropdown: !!returnVals.shouldShowDropdown,
     },
     { isCardHook: true },
   );
-  mockHook(useIsMasquerading, !!returnVals.isMasquerading);
   mockHook(
     useCourseData,
     {
@@ -91,7 +76,6 @@ describe('CourseCardMenu', () => {
       when(hooks.useEmailSettings).expectCalledWith();
     });
     it('initializes hook data ', () => {
-      when(useIsMasquerading).expectCalledWith();
       when(useCourseData).expectCalledWith(props.cardId);
     });
   });
@@ -103,75 +87,31 @@ describe('CourseCardMenu', () => {
       expect(dropdown).toBeNull();
     });
     describe('show dropdown', () => {
-      describe('hide unenroll item and disable email', () => {
-        it('displays Dropdown and renders SocialShareMenu and UnenrollConfirmModal', async () => {
-          mockHooks({
-            shouldShowDropdown: true,
-          });
-          renderComponent();
-          const user = userEvent.setup();
-          const dropdown = screen.getByRole('button', { name: messages.dropdownAlt.defaultMessage });
-          expect(dropdown).toBeInTheDocument();
-          await user.click(dropdown);
-          const unenrollOption = screen.queryByRole('button', { name: messages.unenroll.defaultMessage });
-          expect(unenrollOption).toBeNull();
-          const socialShareMenu = screen.getByText('SocialShareMenu');
-          expect(socialShareMenu).toBeInTheDocument();
-          const unenrollConfirmModal = screen.getByText('UnenrollConfirmModal');
-          expect(unenrollConfirmModal).toBeInTheDocument();
-          const emailSettingsModal = screen.queryByText('EmailSettingsModal');
-          expect(emailSettingsModal).toBeNull();
+      it('renders the share menu without an unenroll action', async () => {
+        mockHooks({
+          shouldShowDropdown: true,
         });
+        renderComponent();
+        const user = userEvent.setup();
+        const dropdown = screen.getByRole('button', { name: messages.dropdownAlt.defaultMessage });
+        expect(dropdown).toBeInTheDocument();
+        await user.click(dropdown);
+        expect(screen.queryByRole('button', { name: messages.unenroll.defaultMessage })).toBeNull();
+        expect(screen.getByText('SocialShareMenu')).toBeInTheDocument();
+        expect(screen.queryByText('EmailSettingsModal')).toBeNull();
       });
-      describe('show unenroll and enable email', () => {
-        const hookProps = {
+      it('renders email settings without an unenroll action', async () => {
+        mockHooks({
           shouldShowDropdown: true,
           isEmailEnabled: true,
-          shouldShowUnenrollItem: true,
-        };
-        describe('unenroll modal toggle', () => {
-          describe('not masquerading', () => {
-            it('renders all components', async () => {
-              mockHooks(hookProps);
-              renderComponent();
-
-              const user = userEvent.setup();
-              const dropdown = screen.getByRole('button', { name: messages.dropdownAlt.defaultMessage });
-              expect(dropdown).toBeInTheDocument();
-              await user.click(dropdown);
-
-              const unenrollOption = screen.getByRole('button', { name: messages.unenroll.defaultMessage });
-              expect(unenrollOption).toBeInTheDocument();
-              const socialShareMenu = screen.getByText('SocialShareMenu');
-              expect(socialShareMenu).toBeInTheDocument();
-              const unenrollConfirmModal = screen.getByText('UnenrollConfirmModal');
-              expect(unenrollConfirmModal).toBeInTheDocument();
-              const emailSettingsModal = screen.getByText('EmailSettingsModal');
-              expect(emailSettingsModal).toBeInTheDocument();
-            });
-          });
-          describe('masquerading', () => {
-            it('renders but unenroll is disabled', async () => {
-              mockHooks({ ...hookProps, isMasquerading: true });
-              renderComponent();
-
-              const user = userEvent.setup();
-              const dropdown = screen.getByRole('button', { name: messages.dropdownAlt.defaultMessage });
-              expect(dropdown).toBeInTheDocument();
-              await user.click(dropdown);
-
-              const unenrollOption = screen.getByRole('button', { name: messages.unenroll.defaultMessage });
-              expect(unenrollOption).toBeInTheDocument();
-              expect(unenrollOption).toHaveAttribute('aria-disabled', 'true');
-              const socialShareMenu = screen.getByText('SocialShareMenu');
-              expect(socialShareMenu).toBeInTheDocument();
-              const unenrollConfirmModal = screen.getByText('UnenrollConfirmModal');
-              expect(unenrollConfirmModal).toBeInTheDocument();
-              const emailSettingsModal = screen.getByText('EmailSettingsModal');
-              expect(emailSettingsModal).toBeInTheDocument();
-            });
-          });
         });
+        renderComponent();
+        const user = userEvent.setup();
+        const dropdown = screen.getByRole('button', { name: messages.dropdownAlt.defaultMessage });
+        await user.click(dropdown);
+        expect(screen.queryByRole('button', { name: messages.unenroll.defaultMessage })).toBeNull();
+        expect(screen.getByText('SocialShareMenu')).toBeInTheDocument();
+        expect(screen.getByText('EmailSettingsModal')).toBeInTheDocument();
       });
     });
   });

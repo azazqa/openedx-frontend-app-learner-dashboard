@@ -109,9 +109,9 @@ describe('CourseCardMenu hooks', () => {
       });
     };
     describe('shouldShowUnenrollItem', () => {
-      it('returns true if enrolled and not earned', () => {
+      it('stays hidden when the learner is enrolled and has not earned a certificate', () => {
         mockHooks({ isEnrolled: true });
-        expect(hooks.useOptionVisibility(cardId).shouldShowUnenrollItem).toEqual(true);
+        expect(hooks.useOptionVisibility(cardId).shouldShowUnenrollItem).toEqual(false);
       });
       it('returns false if not enrolled', () => {
         mockHooks();
@@ -142,9 +142,9 @@ describe('CourseCardMenu hooks', () => {
         mockHooks({ isEmailEnabled: true });
         expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(true);
       });
-      it('returns true if enrolled and not earned', () => {
+      it('returns false if enrolled and not earned when email and socials are disabled', () => {
         mockHooks({ isEnrolled: true });
-        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(true);
+        expect(hooks.useOptionVisibility(cardId).shouldShowDropdown).toEqual(false);
       });
     });
   });

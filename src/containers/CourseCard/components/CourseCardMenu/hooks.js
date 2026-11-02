@@ -58,14 +58,11 @@ export const useCardSocialSettingsData = (cardId) => {
 export const useOptionVisibility = (cardId) => {
   const courseData = useCourseData(cardId);
   const isEmailEnabled = courseData?.enrollment?.isEmailEnabled ?? false;
-  const isEnrolled = courseData?.enrollment?.isEnrolled ?? false;
   const { twitter, facebook } = useCardSocialSettingsData(cardId);
-  const isEarned = courseData?.certificate?.isEarned ?? false;
 
-  const shouldShowUnenrollItem = isEnrolled && !isEarned;
+  const shouldShowUnenrollItem = false;
   const shouldShowDropdown = (
-    shouldShowUnenrollItem
-    || isEmailEnabled
+    isEmailEnabled
     || facebook.isEnabled
     || twitter.isEnabled
   );

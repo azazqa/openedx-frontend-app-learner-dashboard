@@ -7,7 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Dropdown } from '@openedx/paragon';
 import LogoSlot from '@edx/frontend-component-header/dist/plugin-slots/LogoSlot';
-import LearningHeaderActionsSlot from '@edx/frontend-component-header/dist/plugin-slots/LearningHeaderActionsSlot';
+import HeaderNotificationsSlot from '@edx/frontend-component-header/dist/plugin-slots/HeaderNotificationsSlot';
 import LearningUserMenuToggleSlot from '@edx/frontend-component-header/dist/plugin-slots/LearningUserMenuToggleSlot';
 import LearningUserMenuSlot from '@edx/frontend-component-header/dist/plugin-slots/LearningUserMenuSlot';
 
@@ -104,7 +104,7 @@ export const LearnerDashboardHeader = () => {
               </a>
             ))}
           </nav>
-          <LearningHeaderActionsSlot />
+          <HeaderNotificationsSlot />
           {authenticatedUser && (
             <KlmsUserMenu username={authenticatedUser.username} />
           )}

@@ -39,10 +39,10 @@ describe('LearnerDashboardHeader', () => {
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl(courseSearchUrl));
   });
 
-  it('should display Help link if SUPPORT_URL is set', () => {
+  it('does not display a Help link', () => {
     mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
     render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
-    expect(screen.getByRole('link', { name: 'Help' })).toHaveAttribute('href', 'http://localhost:18000/support');
+    expect(screen.queryByRole('link', { name: 'Help' })).not.toBeInTheDocument();
   });
 
   it('should display Programs link if it is enabled by configuration', () => {
