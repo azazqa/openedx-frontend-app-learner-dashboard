@@ -45,6 +45,11 @@ const getLearnerHeaderMenu = (
       items: [
         {
           type: 'item',
+          href: `${getConfig().LMS_BASE_URL}/dashboard`,
+          content: formatMessage(messages.dashboard),
+        },
+        {
+          type: 'item',
           href: `${getConfig().ACCOUNT_PROFILE_URL}/u/${authenticatedUser?.username}`,
           content: formatMessage(messages.profile),
         },
@@ -53,16 +58,6 @@ const getLearnerHeaderMenu = (
           href: `${getConfig().ACCOUNT_SETTINGS_URL}`,
           content: formatMessage(messages.account),
         },
-        ...(getConfig().ORDER_HISTORY_URL ? [{
-          type: 'item',
-          href: getConfig().ORDER_HISTORY_URL,
-          content: formatMessage(messages.orderHistory),
-        }] : []),
-      ],
-    },
-    {
-      heading: '',
-      items: [
         {
           type: 'item',
           href: `${getConfig().LOGOUT_URL}`,

@@ -2,9 +2,9 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
   dashboard: {
-    id: 'learnerVariantDashboard.menu.dashboard.label',
-    defaultMessage: 'Dashboard',
-    description: 'The text for the user menu Dashboard navigation link.',
+    id: 'klms.header.userMenu.dashboard',
+    defaultMessage: '대시보드',
+    description: '사용자 메뉴의 대시보드 링크',
   },
   dashboardPersonal: {
     id: 'learnerVariantDashboard.menu.dashboardPersonal.label',
@@ -22,9 +22,9 @@ const messages = defineMessages({
     description: 'The text for the link to the Help Center',
   },
   profile: {
-    id: 'learnerVariantDashboard.menu.profile.label',
-    defaultMessage: 'Profile',
-    description: 'The text for the user menu Profile navigation link.',
+    id: 'klms.header.userMenu.profile',
+    defaultMessage: '프로필',
+    description: '사용자 메뉴의 프로필 링크',
   },
   viewPrograms: {
     id: 'learnerVariantDashboard.menu.viewPrograms.label',
@@ -32,33 +32,28 @@ const messages = defineMessages({
     description: 'The text for the user menu View Programs navigation link.',
   },
   account: {
-    id: 'learnerVariantDashboard.menu.account.label',
-    defaultMessage: 'Account',
-    description: 'The text for the user menu Account navigation link.',
-  },
-  orderHistory: {
-    id: 'learnerVariantDashboard.menu.orderHistory.label',
-    defaultMessage: 'Order History',
-    description: 'The text for the user menu Order History navigation link.',
+    id: 'klms.header.userMenu.account',
+    defaultMessage: '계정',
+    description: '사용자 메뉴의 계정 링크',
   },
   signOut: {
-    id: 'learnerVariantDashboard.menu.signOut.label',
-    defaultMessage: 'Sign Out',
-    description: 'The label for the user menu Sign Out action.',
+    id: 'klms.header.userMenu.logout',
+    defaultMessage: '로그아웃',
+    description: '사용자 메뉴의 로그아웃 링크',
   },
   course: {
     id: 'learnerVariantDashboard.course',
-    defaultMessage: 'Courses',
+    defaultMessage: '강의',
     description: 'Header link for switching to dashboard page.',
   },
   program: {
     id: 'learnerVariantDashboard.program',
-    defaultMessage: 'Programs',
+    defaultMessage: '프로그램',
     description: 'Header link for switching to program page.',
   },
   discoverNew: {
     id: 'learnerVariantDashboard.discoverNew',
-    defaultMessage: 'Discover New',
+    defaultMessage: '새로운 것을 발견하세요',
     description: 'Header link for switching to discover page.',
   },
   logoAltText: {
