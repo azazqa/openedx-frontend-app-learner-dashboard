@@ -1,6 +1,7 @@
 import { mergeConfig } from '@edx/frontend-platform';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { MemoryRouter } from 'react-router-dom';
 
 import urls from 'data/services/lms/urls';
 import LearnerDashboardHeader from '.';
@@ -22,49 +23,37 @@ jest.mock('./hooks', () => ({
   findCoursesNavClicked: jest.fn(),
 }));
 
-const mockedHeaderProps = jest.fn();
 jest.mock('containers/MasqueradeBar', () => jest.fn(() => <div>MasqueradeBar</div>));
 jest.mock('./ConfirmEmailBanner', () => jest.fn(() => <div>ConfirmEmailBanner</div>));
-jest.mock('@edx/frontend-component-header', () => jest.fn((props) => {
-  mockedHeaderProps(props);
-  return <div>Header</div>;
-}));
 
 describe('LearnerDashboardHeader', () => {
   beforeEach(() => jest.clearAllMocks());
   it('renders and discover url is correct', () => {
     mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
-    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
+    render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
     expect(screen.getByText('ConfirmEmailBanner')).toBeInTheDocument();
     expect(screen.getByText('MasqueradeBar')).toBeInTheDocument();
-    expect(screen.getByText('Header')).toBeInTheDocument();
-    const props = mockedHeaderProps.mock.calls[0][0];
-    const { mainMenuItems } = props;
-    const discoverUrl = mainMenuItems[1].href;
-    mainMenuItems[1].onClick();
-    expect(discoverUrl).toBe(urls.baseAppUrl(courseSearchUrl));
+    const discover = screen.getByRole('link', { name: '새로운 것을 발견하세요' });
+    expect(discover).toHaveAttribute('href', urls.baseAppUrl(courseSearchUrl));
+    discover.click();
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl(courseSearchUrl));
   });
 
   it('should display Help link if SUPPORT_URL is set', () => {
     mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
-    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
-    const props = mockedHeaderProps.mock.calls[0][0];
-    const { secondaryMenuItems } = props;
-    expect(secondaryMenuItems.length).toBe(1);
+    render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
+    expect(screen.getByRole('link', { name: 'Help' })).toHaveAttribute('href', 'http://localhost:18000/support');
   });
+
   it('should display Programs link if it is enabled by configuration', () => {
     mergeConfig({ ENABLE_PROGRAMS: true });
-    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
-    const props = mockedHeaderProps.mock.calls[0][0];
-    const { mainMenuItems } = props;
-    expect(mainMenuItems.length).toBe(3);
+    render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
+    expect(screen.getByRole('link', { name: '프로그램' })).toBeInTheDocument();
   });
+
   it('should not display Discover New tab if it is disabled by configuration', () => {
     mergeConfig({ NON_BROWSABLE_COURSES: true });
-    render(<IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider>);
-    const props = mockedHeaderProps.mock.calls[0][0];
-    const { mainMenuItems } = props;
-    expect(mainMenuItems.length).toBe(2);
+    render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
+    expect(screen.queryByRole('link', { name: '새로운 것을 발견하세요' })).not.toBeInTheDocument();
   });
 });

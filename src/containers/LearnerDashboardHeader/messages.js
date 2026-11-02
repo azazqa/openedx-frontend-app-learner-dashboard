@@ -56,6 +56,16 @@ const messages = defineMessages({
     defaultMessage: '새로운 것을 발견하세요',
     description: 'Header link for switching to discover page.',
   },
+  skipNavLink: {
+    id: 'header.navigation.skipNavLink',
+    defaultMessage: 'Skip to main content.',
+    description: 'A link used by screen readers to allow users to skip to the main content of the page.',
+  },
+  userOptionsDropdownLabel: {
+    id: 'header.menu.aria-label',
+    defaultMessage: 'User Options',
+    description: 'The aria-label for the user options dropdown.',
+  },
   logoAltText: {
     id: 'learnerVariantDashboard.logoAltText',
     defaultMessage: 'edX, Inc. Dashboard',
