@@ -33,6 +33,17 @@
 }
 
 .logo {
-  // copy from legacy dashboard
-  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  height: 1.75rem;
+
+  img,
+  .logo-image {
+    display: block;
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
 }
