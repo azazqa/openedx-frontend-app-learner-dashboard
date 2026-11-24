@@ -24,7 +24,7 @@ const CompletionCriteriaBody = ({ criteria, formatMessage }) => {
     .join(', ');
   return (
     <div data-testid="completion-criteria">
-      <div className="font-weight-bold">{formatMessage(messages.completionCriteriaTitle)}</div>
+      <div className="font-weight-bold h5 mb-1">{formatMessage(messages.completionCriteriaTitle)}</div>
       <div className="font-weight-bold">
         {formatMessage(messages.completionCriteriaPassScore, { passScore: criteria.pass_score })}
       </div>
@@ -92,7 +92,7 @@ export const CertificateBanner = ({ cardId }) => {
   const renderCompletionCriteria = (fallback, fallbackVariant) => {
     if (criteriaFetched && criteria) {
       return (
-        <Banner variant="success" icon={CheckCircle}>
+        <Banner variant="success" icon={null}>
           <CompletionCriteriaBody criteria={criteria} formatMessage={formatMessage} />
         </Banner>
       );
