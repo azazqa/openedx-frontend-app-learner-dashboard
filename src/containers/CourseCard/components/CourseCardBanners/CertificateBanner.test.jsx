@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { useCourseData } from 'hooks';
 import { useInitializeLearnerHome } from 'data/hooks';
+import { fetchCompletionCriteria } from 'data/services/lms/api';
 import CertificateBanner from './CertificateBanner';
 
 jest.mock('hooks', () => ({
@@ -17,6 +19,11 @@ jest.mock('data/hooks', () => ({
   useInitializeLearnerHome: jest.fn(),
 }));
 
+jest.mock('data/services/lms/api', () => ({
+  fetchCompletionCriteria: jest.fn(),
+}));
+
+const courseId = 'course-v1:org+course+run';
 const defaultCertificate = {
   availableDate: '10/20/3030',
   isRestricted: false,
@@ -27,7 +34,12 @@ const defaultEnrollment = {
   isAudit: false,
   isVerified: false,
 };
-const defaultCourseRun = { isArchived: false };
+const defaultCourseRun = {
+  isArchived: false,
+  courseId,
+  minPassingGrade: 0.8,
+  progressUrl: 'progressUrl',
+};
 const defaultGrade = { isPassing: false };
 const defaultPlatformSettings = {};
 const props = { cardId: 'cardId' };
@@ -42,6 +54,7 @@ describe('CertificateBanner', () => {
     courseRun: {
       minPassingGrade: 0.8,
       progressUrl: 'progressUrl',
+      courseId,
     },
   });
   const createWrapper = ({
@@ -62,10 +75,16 @@ describe('CertificateBanner', () => {
     });
     const lernearData = { data: { platformSettings: { ...defaultPlatformSettings, ...platformSettings } } };
     useInitializeLearnerHome.mockReturnValue(lernearData);
-    return render(<IntlProvider locale="en"><CertificateBanner {...props} /></IntlProvider>);
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    return render(
+      <QueryClientProvider client={client}>
+        <IntlProvider locale="en"><CertificateBanner {...props} /></IntlProvider>
+      </QueryClientProvider>,
+    );
   };
   beforeEach(() => {
     jest.clearAllMocks();
+    fetchCompletionCriteria.mockResolvedValue({});
   });
   it('is restricted', () => {
     createWrapper({
@@ -200,13 +219,13 @@ describe('CertificateBanner', () => {
     const readyMsg = screen.getByText((text) => text.includes('Congratulations.'));
     expect(readyMsg).toBeInTheDocument();
   });
-  it('not passing and audit', () => {
+  it('not passing and audit', async () => {
     createWrapper({
       enrollment: {
         isAudit: true,
       },
     });
-    const banner = screen.getByRole('alert');
+    const banner = await screen.findByRole('alert');
     expect(banner).toHaveClass('alert-info');
     const auditMsg = screen.getByText((text) => text.includes('Grade required to pass the course:'));
     expect(auditMsg).toBeInTheDocument();
@@ -220,12 +239,31 @@ describe('CertificateBanner', () => {
     const archivedMsg = screen.getByText('You are not eligible for a certificate.');
     expect(archivedMsg).toBeInTheDocument();
   });
-  it('not passing and not audit and not finished', () => {
+  it('not passing and not audit and not finished', async () => {
     createWrapper({});
-    const banner = screen.getByRole('alert');
+    const banner = await screen.findByRole('alert');
     expect(banner).toHaveClass('alert-warning');
     const msg = screen.getByText((text) => text.includes('Grade required for a certificate'));
     expect(msg).toBeInTheDocument();
+  });
+  it('shows KLMS completion criteria when the API returns weights', async () => {
+    fetchCompletionCriteria.mockResolvedValue({
+      [courseId]: {
+        pass_score: 60,
+        weights: [
+          { type: '진행평가', percent: 10 },
+          { type: '시험', percent: 50 },
+          { type: '과제', percent: 40 },
+        ],
+      },
+    });
+    createWrapper({});
+    expect(await screen.findByTestId('completion-criteria')).toBeInTheDocument();
+    expect(screen.getByText('수료 기준')).toBeInTheDocument();
+    expect(screen.getByText('종합 성적 60점 이상')).toBeInTheDocument();
+    expect(screen.getByText('진행평가 10%, 시험 50%, 과제 40% 비율로 합산하여')).toBeInTheDocument();
+    expect(screen.getByText('종합 성적 100점 만점으로 계산')).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByText(/Grade required for a certificate/)).not.toBeInTheDocument());
   });
   it('is passing and is earned but unavailable', () => {
     createWrapper({
@@ -255,7 +293,12 @@ describe('CertificateBanner', () => {
     useCourseData.mockReturnValue({});
     const lernearData = { data: { platformSettings: { supportEmail } } };
     useInitializeLearnerHome.mockReturnValue(lernearData);
-    render(<IntlProvider locale="en"><CertificateBanner cardId="test-card" /></IntlProvider>);
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    render(
+      <QueryClientProvider client={client}>
+        <IntlProvider locale="en"><CertificateBanner cardId="test-card" /></IntlProvider>
+      </QueryClientProvider>,
+    );
 
     const mockedUseMemo = jest.spyOn(React, 'useMemo');
     const useMemoCall = mockedUseMemo.mock.calls.find(call => call[1].some(dep => dep === undefined || dep === null));

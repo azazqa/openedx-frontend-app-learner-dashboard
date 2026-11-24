@@ -16,6 +16,11 @@ const fetchProgressRates = async () => {
   return data;
 };
 
+const fetchCompletionCriteria = async () => {
+  const { data } = await getAuthenticatedHttpClient().get(urls.getCompletionCriteriaApiUrl());
+  return data;
+};
+
 const unenrollFromCourse = async ({ courseId }) => {
   const url = urls.courseUnenroll();
   const formData = new FormData();
@@ -90,6 +95,7 @@ const sendConfirmEmail = async (sendEmailUrl: string) => {
 export {
   initializeList,
   fetchProgressRates,
+  fetchCompletionCriteria,
   unenrollFromCourse,
   updateEntitlementEnrollment,
   deleteEntitlementEnrollment,

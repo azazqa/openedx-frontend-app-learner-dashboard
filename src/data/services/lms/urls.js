@@ -8,6 +8,7 @@ export const getApiUrl = () => (`${getConfig().LMS_BASE_URL}/api`);
 
 const getInitApiUrl = () => (`${getApiUrl()}/learner_home/init`);
 const getProgressApiUrl = () => (`${getBaseUrl()}/klms/api/progress/`);
+const getCompletionCriteriaApiUrl = () => (`${getBaseUrl()}/klms/api/completion-criteria/`);
 
 const event = () => `${getBaseUrl()}/event`;
 const courseUnenroll = () => `${getBaseUrl()}/change_enrollment`;
@@ -41,6 +42,7 @@ export default StrictDict({
   event,
   getInitApiUrl,
   getProgressApiUrl,
+  getCompletionCriteriaApiUrl,
   learningMfeUrl,
   programsUrl,
   updateEmailSettings,
