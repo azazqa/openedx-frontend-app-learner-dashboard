@@ -259,11 +259,11 @@ describe('CertificateBanner', () => {
     });
     createWrapper({});
     expect(await screen.findByTestId('completion-criteria')).toBeInTheDocument();
-    expect(screen.getByText('수료 기준')).toBeInTheDocument();
-    expect(screen.getByText('수료 기준')).toHaveClass('h5');
-    expect(screen.getByText('종합 성적 60점 이상')).toBeInTheDocument();
-    expect(screen.getByText('진행평가 10%, 시험 50%, 과제 40% 비율로 합산하여')).toBeInTheDocument();
-    expect(screen.getByText('종합 성적 100점 만점으로 계산')).toBeInTheDocument();
+    expect(screen.getByText('Completion criteria')).toBeInTheDocument();
+    expect(screen.getByText('Completion criteria')).toHaveClass('h5');
+    expect(screen.getByText('Overall score of 60 points or higher')).toBeInTheDocument();
+    expect(screen.getByText('Combined using 진행평가 10%, 시험 50%, 과제 40% weighting')).toBeInTheDocument();
+    expect(screen.getByText('Overall score is calculated out of 100 points')).toBeInTheDocument();
     expect(screen.getByRole('alert').querySelector('.alert-icon')).toBeNull();
     await waitFor(() => expect(screen.queryByText(/Grade required for a certificate/)).not.toBeInTheDocument());
   });

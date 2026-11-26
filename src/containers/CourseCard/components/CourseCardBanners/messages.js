@@ -63,23 +63,23 @@ const messages = defineMessages({
   },
   completionCriteriaTitle: {
     id: 'klms.learnerDashboard.completionCriteria.title',
-    description: 'Heading for KLMS course completion criteria banner',
-    defaultMessage: '수료 기준',
+    description: 'Heading for the KLMS course completion criteria banner',
+    defaultMessage: 'Completion criteria',
   },
   completionCriteriaPassScore: {
     id: 'klms.learnerDashboard.completionCriteria.passScore',
     description: 'Minimum overall score required to complete the course',
-    defaultMessage: '종합 성적 {passScore}점 이상',
+    defaultMessage: 'Overall score of {passScore} points or higher',
   },
   completionCriteriaWeights: {
     id: 'klms.learnerDashboard.completionCriteria.weights',
     description: 'Weighted grading categories used for the overall score',
-    defaultMessage: '{weightsLine} 비율로 합산하여',
+    defaultMessage: 'Combined using {weightsLine} weighting',
   },
   completionCriteriaScale: {
     id: 'klms.learnerDashboard.completionCriteria.scale',
     description: 'Overall score is calculated out of 100 points',
-    defaultMessage: '종합 성적 100점 만점으로 계산',
+    defaultMessage: 'Overall score is calculated out of 100 points',
   },
   downloadCertificate: {
     id: 'learner-dash.courseCard.banners.downloadCertificate',

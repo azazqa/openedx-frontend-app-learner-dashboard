@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import useCourseData from 'hooks/useCourseData';
 import { fetchProgressRates } from 'data/services/lms/api';
@@ -21,9 +22,11 @@ const renderProgress = () => {
     defaultOptions: { queries: { retry: false } },
   });
   return render(
-    <QueryClientProvider client={client}>
-      <CourseProgress cardId="card-0" />
-    </QueryClientProvider>,
+    <IntlProvider locale="en">
+      <QueryClientProvider client={client}>
+        <CourseProgress cardId="card-0" />
+      </QueryClientProvider>
+    </IntlProvider>,
   );
 };
 

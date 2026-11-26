@@ -3,8 +3,8 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   dashboard: {
     id: 'klms.header.userMenu.dashboard',
-    defaultMessage: '대시보드',
-    description: '사용자 메뉴의 대시보드 링크',
+    defaultMessage: 'Dashboard',
+    description: 'User menu dashboard link',
   },
   dashboardPersonal: {
     id: 'learnerVariantDashboard.menu.dashboardPersonal.label',
@@ -23,8 +23,8 @@ const messages = defineMessages({
   },
   profile: {
     id: 'klms.header.userMenu.profile',
-    defaultMessage: '프로필',
-    description: '사용자 메뉴의 프로필 링크',
+    defaultMessage: 'Profile',
+    description: 'User menu profile link',
   },
   viewPrograms: {
     id: 'learnerVariantDashboard.menu.viewPrograms.label',
@@ -33,28 +33,28 @@ const messages = defineMessages({
   },
   account: {
     id: 'klms.header.userMenu.account',
-    defaultMessage: '계정',
-    description: '사용자 메뉴의 계정 링크',
+    defaultMessage: 'Account',
+    description: 'User menu account link',
   },
   signOut: {
     id: 'klms.header.userMenu.logout',
-    defaultMessage: '로그아웃',
-    description: '사용자 메뉴의 로그아웃 링크',
+    defaultMessage: 'Sign out',
+    description: 'User menu sign-out link',
   },
   course: {
     id: 'learnerVariantDashboard.course',
-    defaultMessage: '강의',
+    defaultMessage: 'Courses',
     description: 'Header link for switching to dashboard page.',
   },
   program: {
     id: 'learnerVariantDashboard.program',
-    defaultMessage: '프로그램',
+    defaultMessage: 'Programs',
     description: 'Header link for switching to program page.',
   },
   discoverNew: {
     id: 'klms.header.courses',
-    defaultMessage: '과정',
-    description: '상단 메뉴의 과정 링크. 번역 저장소의 Discover 문구를 쓰지 않습니다.',
+    defaultMessage: 'Catalog',
+    description: 'Top menu link to the course catalog. Korean text comes from the translation overrides (klms.header.courses).',
   },
   skipNavLink: {
     id: 'header.navigation.skipNavLink',

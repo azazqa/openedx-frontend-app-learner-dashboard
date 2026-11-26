@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { learnerDashboardQueryKeys } from 'data/hooks/queryKeys';
 import { fetchProgressRates } from 'data/services/lms/api';
 import useCourseData from 'hooks/useCourseData';
 
 export const CourseProgress = ({ cardId }) => {
+  const intl = useIntl();
   const courseData = useCourseData(cardId);
   const courseId = courseData?.courseRun?.courseId;
   const { data, isFetched } = useQuery({
@@ -34,7 +36,10 @@ export const CourseProgress = ({ cardId }) => {
           aria-valuenow={width}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-label="진도율"
+          aria-label={intl.formatMessage({
+            id: 'klms.learnerDashboard.courseProgress.ariaLabel',
+            defaultMessage: 'Progress',
+          })}
         />
       </div>
     </div>

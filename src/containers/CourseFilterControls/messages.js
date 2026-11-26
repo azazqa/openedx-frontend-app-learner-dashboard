@@ -53,8 +53,8 @@ const messages = defineMessages({
   },
   refine: {
     id: 'klms.learnerDashboard.courseListFilters.refine',
-    description: '강좌 목록 필터 버튼. 번역 저장소의 Refine 문구를 쓰지 않습니다.',
-    defaultMessage: '필터',
+    description: 'Course list filter button. Korean text comes from the translation overrides.',
+    defaultMessage: 'Filter',
   },
 });
 

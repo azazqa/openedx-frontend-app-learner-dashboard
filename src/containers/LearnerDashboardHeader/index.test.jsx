@@ -33,7 +33,7 @@ describe('LearnerDashboardHeader', () => {
     render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
     expect(screen.getByText('ConfirmEmailBanner')).toBeInTheDocument();
     expect(screen.getByText('MasqueradeBar')).toBeInTheDocument();
-    const discover = screen.getByRole('link', { name: '과정' });
+    const discover = screen.getByRole('link', { name: 'Catalog' });
     expect(discover).toHaveAttribute('href', urls.baseAppUrl(courseSearchUrl));
     discover.click();
     expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl(courseSearchUrl));
@@ -48,12 +48,12 @@ describe('LearnerDashboardHeader', () => {
   it('should display Programs link if it is enabled by configuration', () => {
     mergeConfig({ ENABLE_PROGRAMS: true });
     render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
-    expect(screen.getByRole('link', { name: '프로그램' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Programs' })).toBeInTheDocument();
   });
 
   it('should not display Discover New tab if it is disabled by configuration', () => {
     mergeConfig({ NON_BROWSABLE_COURSES: true });
     render(<MemoryRouter><IntlProvider locale="en"><LearnerDashboardHeader /></IntlProvider></MemoryRouter>);
-    expect(screen.queryByRole('link', { name: '과정' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Catalog' })).not.toBeInTheDocument();
   });
 });

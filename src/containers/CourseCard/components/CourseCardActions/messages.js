@@ -8,8 +8,8 @@ const messages = defineMessages({
   },
   resume: {
     id: 'klms.learnerDashboard.courseCard.actions.resume',
-    description: '강좌 카드 학습 버튼. 번역 저장소의 Resume 문구를 쓰지 않습니다.',
-    defaultMessage: '학습하기',
+    description: 'Course card resume button. Korean text comes from the translation overrides.',
+    defaultMessage: 'Resume',
   },
   viewCourse: {
     id: 'learner-dash.courseCard.actions.viewCourse',
